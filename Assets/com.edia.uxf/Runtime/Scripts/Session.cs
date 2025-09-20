@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Linq;
 using System.IO;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Collections.Specialized;
-using UnityEngine.Events;
 using SubjectNerd.Utilities;
 
 namespace UXF
@@ -496,6 +493,22 @@ namespace UXF
             }
         }
 
+        /// <summary>
+        /// Get first Trial of given block.
+        /// </summary>
+        /// <returns>First Trial, if any</returns>
+        Trial GetFirstTrial(Block currenBlock)
+        {   
+            try
+            {
+                return currenBlock.trials[0];
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+                throw new NoSuchTrialException("There is no first trial. No trials exist in the first block.");
+            }
+        }
+        
         /// <summary>
         /// Get last Trial in this session.
         /// </summary>
