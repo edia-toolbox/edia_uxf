@@ -206,6 +206,11 @@ namespace UXF
         public Trial FirstTrial { get { return GetFirstTrial(); } }
 
         /// <summary>
+        /// Get the first trial in the first block of the session.
+        /// </summary>
+        public Trial FirstTrialInBlock { get { return GetFirstTrial(Session.instance.CurrentBlock); } }
+        
+        /// <summary>
         /// Get the last trial in the last block of the session.
         /// </summary>
         public Trial LastTrial { get { return GetLastTrial(); } }
