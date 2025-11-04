@@ -301,7 +301,15 @@ namespace UXF
             // log any settings we need to for this trial
             foreach (string s in session.settingsToLog)
             {
-                result[s] = settings.GetObject(s, string.Empty);
+                var settingObject = settings.GetObject(s, string.Empty);
+                if (settingObject is List<string> stringList)
+                {
+                    result[s] = string.Join(";", stringList);
+                }
+                else
+                {
+                    result[s] = settingObject.ToString();
+                }
             }
         }
 
