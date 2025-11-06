@@ -303,7 +303,7 @@ namespace UXF
             {
                 var settingObject = settings.GetObject(s, string.Empty);
 
-                if (settingObject is IList list)
+                if (settingObject is System.Collections.IList list)
                     result[s] = string.Join(";", list.OfType<object>().Select(o => o?.ToString() ?? ""));
                 else
                     result[s] = settingObject?.ToString() ?? string.Empty;
