@@ -302,14 +302,11 @@ namespace UXF
             foreach (string s in session.settingsToLog)
             {
                 var settingObject = settings.GetObject(s, string.Empty);
-                if (settingObject is List<string> stringList)
-                {
-                    result[s] = string.Join(";", stringList);
-                }
+
+                if (settingObject is IList list)
+                    result[s] = string.Join(";", list.OfType<object>().Select(o => o?.ToString() ?? ""));
                 else
-                {
-                    result[s] = settingObject.ToString();
-                }
+                    result[s] = settingObject?.ToString() ?? string.Empty;
             }
         }
 
