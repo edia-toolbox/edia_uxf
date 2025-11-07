@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Linq;
 using System.IO;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Collections.Specialized;
-using UnityEngine.Events;
 using SubjectNerd.Utilities;
 
 namespace UXF
@@ -208,6 +205,11 @@ namespace UXF
         /// </summary>
         public Trial FirstTrial { get { return GetFirstTrial(); } }
 
+        /// <summary>
+        /// Get the first trial in the first block of the session.
+        /// </summary>
+        public Trial FirstTrialInBlock { get { return GetFirstTrial(Session.instance.CurrentBlock); } }
+        
         /// <summary>
         /// Get the last trial in the last block of the session.
         /// </summary>
@@ -497,6 +499,22 @@ namespace UXF
         }
 
         /// <summary>
+        /// Get first Trial of given block.
+        /// </summary>
+        /// <returns>First Trial, if any</returns>
+        Trial GetFirstTrial(Block currenBlock)
+        {   
+            try
+            {
+                return currenBlock.trials[0];
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+                throw new NoSuchTrialException("There is no first trial. No trials exist in the first block.");
+            }
+        }
+        
+        /// <summary>
         /// Get last Trial in this session.
         /// </summary>
         /// <returns></returns>
@@ -698,6 +716,8 @@ namespace UXF
 
         void SaveResults()
         {
+            Trial.WaitForTasks();
+
             // generate list of all headers possible
             // hashset keeps unique set of keys
             HashSet<string> resultsHeaders = new HashSet<string>();
